@@ -1,0 +1,38 @@
+# Standards: 0.1
+---
+- name: Fact clockify user
+  set_fact:
+    clockify_user: "{{ clockify_user | default(homebrew_user) | default(ansible_user_id) }}"
+  tags:
+    - clockify
+
+- become: "{{ (clockify_user != ansible_user_id) | bool }}"
+  become_user: "{{ clockify_user }}"
+  block:
+    - name: Install required package
+      ignore_errors: True
+      homebrew_cask:
+        name: clockify
+        greedy: True
+        options: appdir=/Applications
+        accept_external_apps: False
+        state: upgraded
+      tags:
+        - clockify
+
+    - name: Remove quarantine flag
+      register: clockify_quarantine
+      failed_when: clockify_quarantine.rc != 0 and "No such xattr" not in clockify_quarantine.stderr
+      changed_when: clockify_quarantine.rc == 0
+      command: xattr -d com.apple.quarantine /Applications/Clockify.app
+      tags:
+        - clockify
+
+    - name: Start application
+      when: clockify_started
+      changed_when: False
+      command: open -j /Applications/Clockify.app
+      tags:
+        - clockify
+
+...

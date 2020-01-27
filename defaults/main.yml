@@ -1,0 +1,10 @@
+# Standards: 0.1
+---
+# @var clockify_user:description: User to run user-specific commands
+# @var clockify_user:value: clockify_user | default(homebrew_user) | default(ansible_user_id)
+# clockify_user:
+
+# @var clockify_started:description: Restart app if already running
+clockify_started: True
+
+...
