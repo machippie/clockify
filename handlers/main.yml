@@ -1,7 +1,7 @@
 # Standards: 0.1
 ---
 - name: Kill clockify
-  command: killall Clockify
+  command: killall Clockify\ Desktop
   register: clockify_kill
   failed_when: clockify_kill.rc != 0 and "No matching processes belonging to you were found" not in clockify_kill.stderr
   become: "{{ (clockify_user != ansible_user_id) | bool }}"
@@ -9,7 +9,7 @@
 
 - name: Start clockify
   when: clockify_started
-  command: open -j /Applications/Clockify.app
+  command: open -j /Applications/Clockify\ Desktop.app
   become: "{{ (clockify_user != ansible_user_id) | bool }}"
   become_user: "{{ clockify_user }}"
 
