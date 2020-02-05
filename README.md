@@ -1,6 +1,6 @@
 # clockify
 
-[![Build Status](https://cloud.drone.io/api/badges/machippie/clockify/status.svg)](https://cloud.drone.io/machippie/google-chrome)
+[![Build Status](https://cloud.drone.io/api/badges/machippie/clockify/status.svg)](https://cloud.drone.io/machippie/clockify)
 
 Ansible role to configure clockify.
 
