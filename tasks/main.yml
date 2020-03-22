@@ -20,19 +20,12 @@
       tags:
         - clockify
 
-    - name: Remove quarantine flag
-      register: clockify_quarantine
-      failed_when: clockify_quarantine.rc != 0 and "No such xattr" not in clockify_quarantine.stderr
-      changed_when: clockify_quarantine.rc == 0
-      command: xattr -d com.apple.quarantine /Applications/Clockify\ Desktop.app
-      tags:
-        - clockify
-
-    - name: Start application
-      when: clockify_started
-      changed_when: False
-      command: open -j /Applications/Clockify\ Desktop.app
-      tags:
-        - clockify
+- name: Remove quarantine flag
+  register: clockify_quarantine
+  failed_when: clockify_quarantine.rc != 0 and "No such xattr" not in clockify_quarantine.stderr
+  changed_when: clockify_quarantine.rc == 0
+  command: xattr -d com.apple.quarantine /Applications/Clockify\ Desktop.app
+  tags:
+    - clockify
 
 ...
